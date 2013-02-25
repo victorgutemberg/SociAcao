@@ -23,9 +23,13 @@ class Camisa(models.Model):
 	def __unicode__(self):
 		return self.descricao
 
+class Item(models.Model):
+	camisa = models.ForeignKey(Camisa)
+	quantidade = models.IntegerField()
+
 class Compra(models.Model):
 	usuario = models.ForeignKey(Usuario)
-	itens = models.ManyToManyField(Camisa)
+	itens = models.ManyToManyField(Item)
 	data = models.DateTimeField(auto_now_add=True)
 
 	def quantidade_itens(self):

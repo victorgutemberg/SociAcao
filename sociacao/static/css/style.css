@@ -10,3 +10,8 @@
 .form-compra .linha{
 	margin: 10px;
 }
+
+.form-compra .pergunta{
+	font-weight: bold;
+	display: block;
+}

@@ -6,34 +6,67 @@
 <body>
 	<form class="form-compra" action="{% url home.views.compra %}" method="POST">
 		<div class="linha">
-			<label for="nome">Nome:</label>
+			<label class="pergunta">
+				1) Vc está ciente de que só poderá prencher esse form caso já tenha efetuado o pagamento da camisa e que esse pagamento só poderá ser feito até o dia e de março?
+			</label>
+			Sim <input type="radio">
+			Não <input type="radio">
+		</div>
+
+		<div class="linha">
+			<label for="nome" class="pergunta">2) Qual o seu nome:</label>
 			<input type="text" name="nome" id="nome">
 		</div>
 
 		<div class="linha">
-			<label for="sobrenome">Sobrenome:</label>
-			<input type="text" name="sobrenome" id="sobrenome">
+			<label for="email" class="pergunta">3) Qual o seu email:</label>
+			<input type="text" name="email" id="email">
 		</div>
 
 		<div class="linha">
-			<label for="celular">Celular:</label>
+			<label for="celular" class="pergunta">4) Qual o seu celular?</label>
 			<input type="text" name="celular" id="celular">
 		</div>
 
 		<div class="linha">
-			<label for="facebook">Facebook:</label>
+			<label class="pergunta">5) Qual a operadora do seu celular?</label>
+			<input type="radio"> Tim  <br>
+			<input type="radio"> Oi <br>
+			<input type="radio"> Claro <br>
+			<input type="radio"> Vivo <br>
+			<input type="radio"> Nextel
+		</div>
+
+		<div class="linha">
+			<label for="facebook" class="pergunta">6) Qual é o seu facebook? </label>
 			<input type="text" name="facebook" id="facebook">
 		</div>
 
 
-		<label for="tamanhos">Quantidade</label>
+		<label for="tamanhos" class="pergunta">7) Quantas camisas você quer?</label>
 		<div class="linha" id="tamanhos">
 			{% for camisa in camisas %}
 				<div class="linha">
-					<label for="quantidade-p">{{camisa.descricao}}:</label>
-					<input type="number" name="quantidade" id="quantidade-p" min="0" value="0">
+					<label for="quantidade-{{camisa.id}}">{{camisa.descricao}}:</label>
+					<input type="number" name="quantidade-{{camisa.id}}" id="quantidade-{{camisa.id}}" min="0" value="0">
 				</div>
 			{% endfor %}
+		</div>
+
+		<div class="linha">
+			<label class="pergunta">8) Em quais das contas voce efetuou o pagamento?</label>
+			<input type="radio"> Conta de Malu[Bradesco] <br>
+			<input type="radio"> Conta de Malu[Santander] <br>
+			<input type="radio"> Conta de Malu[BB] <br>
+			<input type="radio"> Conta de Gisely[BB] <br>
+		</div>
+
+		<div class="linha">
+			<label class="pergunta">
+				9) Anexe aqui o arquivo do comprovante de deposito em alguma das contas, onde voce efetuou o pagamento.
+				<br>ps:. Caso voce tenha feito o pagamento por deposito em envelope, só será confirmado, apos confirmacao do banco
+			</label>
+			<input type="file">
 		</div>
 
 		<input type="submit" value="Comprar!">
