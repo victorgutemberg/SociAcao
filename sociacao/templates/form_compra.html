@@ -7,10 +7,10 @@
 	<form class="form-compra" action="{% url home.views.compra %}" method="POST">
 		<div class="linha">
 			<label class="pergunta">
-				1) Vc está ciente de que só poderá prencher esse form caso já tenha efetuado o pagamento da camisa e que esse pagamento só poderá ser feito até o dia e de março?
+				1) Vc está ciente de que só poderá prencher esse form caso já tenha efetuado o pagamento da camisa e que esse pagamento só poderá ser feito até o dia 5 de março?
 			</label>
-			Sim <input type="radio">
-			Não <input type="radio">
+			Sim <input type="radio" name="termo" value="1">
+			Não <input type="radio" name="termo" value="2">
 		</div>
 
 		<div class="linha">
@@ -30,11 +30,11 @@
 
 		<div class="linha">
 			<label class="pergunta">5) Qual a operadora do seu celular?</label>
-			<input type="radio"> Tim  <br>
-			<input type="radio"> Oi <br>
-			<input type="radio"> Claro <br>
-			<input type="radio"> Vivo <br>
-			<input type="radio"> Nextel
+			<input type="radio" name="operadora" value="1"> Tim  <br>
+			<input type="radio" name="operadora" value="2"> Oi <br>
+			<input type="radio" name="operadora" value="3"> Claro <br>
+			<input type="radio" name="operadora" value="4"> Vivo <br>
+			<input type="radio" name="operadora" value="5"> Nextel
 		</div>
 
 		<div class="linha">
@@ -43,8 +43,8 @@
 		</div>
 
 
-		<label for="tamanhos" class="pergunta">7) Quantas camisas você quer?</label>
 		<div class="linha" id="tamanhos">
+			<label for="tamanhos" class="pergunta">7) Quantas camisas você quer?</label>
 			{% for camisa in camisas %}
 				<div class="linha">
 					<label for="quantidade-{{camisa.id}}">{{camisa.descricao}}:</label>
@@ -55,10 +55,10 @@
 
 		<div class="linha">
 			<label class="pergunta">8) Em quais das contas voce efetuou o pagamento?</label>
-			<input type="radio"> Conta de Malu[Bradesco] <br>
-			<input type="radio"> Conta de Malu[Santander] <br>
-			<input type="radio"> Conta de Malu[BB] <br>
-			<input type="radio"> Conta de Gisely[BB] <br>
+			<input type="radio" name="conta" value="1"> Conta de Malu[Bradesco] <br>
+			<input type="radio" name="conta" value="2"> Conta de Malu[Santander] <br>
+			<input type="radio" name="conta" value="3"> Conta de Malu[BB] <br>
+			<input type="radio" name="conta" value="4"> Conta de Gisely[BB] <br>
 		</div>
 
 		<div class="linha">

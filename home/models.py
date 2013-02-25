@@ -6,8 +6,8 @@ from django.contrib.auth.models import User
 
 class Usuario(models.Model):
 	nome = models.CharField(max_length=30)
-	sobrenome = models.CharField(max_length=30)
-	celular = models.CharField(max_length=15)
+	email = models.EmailField()
+	celular = models.ForeignKey('Celular')
 	link_facebook = models.TextField()
 
 	def get_full_name(self):
@@ -15,6 +15,13 @@ class Usuario(models.Model):
 
 	def __unicode__(self):
 		return self.get_full_name()
+
+class Celular(models.Model):
+	numero = models.CharField(max_length=15)
+	operadora = models.ForeignKey('Operadora')
+
+class Operadora(models.Model):
+	nome = models.CharField(max_length=10)
 
 class Camisa(models.Model):
 	descricao = models.CharField(max_length=20)
@@ -31,6 +38,7 @@ class Compra(models.Model):
 	usuario = models.ForeignKey(Usuario)
 	itens = models.ManyToManyField(Item)
 	data = models.DateTimeField(auto_now_add=True)
+	comprovante = models.FileField(upload_to='comprovantes')
 
 	def quantidade_itens(self):
 		return self.itens.count()
