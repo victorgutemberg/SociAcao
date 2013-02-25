@@ -1,0 +1,45 @@
+<html>
+<head>
+	<title>SociAção - Formulário para compra de camisas</title>
+	<link rel="stylesheet" type="text/css" href="{{STATIC_URL}}css/style.css">
+</head>
+<body>
+	<form class="form-compra" action="{% url home.views.compra %}" method="POST">
+		<div class="linha">
+			<label for="nome">Nome:</label>
+			<input type="text" name="nome" id="nome">
+		</div>
+
+		<div class="linha">
+			<label for="sobrenome">Sobrenome:</label>
+			<input type="text" name="sobrenome" id="sobrenome">
+		</div>
+
+		<div class="linha">
+			<label for="celular">Celular:</label>
+			<input type="text" name="celular" id="celular">
+		</div>
+
+		<div class="linha">
+			<label for="facebook">Facebook:</label>
+			<input type="text" name="facebook" id="facebook">
+		</div>
+
+
+		<label for="tamanhos">Quantidade</label>
+		<div class="linha" id="tamanhos">
+			{% for camisa in camisas %}
+				<div class="linha">
+					<label for="quantidade-p">{{camisa.descricao}}:</label>
+					<input type="number" name="quantidade" id="quantidade-p" min="0" value="0">
+				</div>
+			{% endfor %}
+		</div>
+
+		<input type="submit" value="Comprar!">
+	</form>
+
+	<script type="text/javascript" src="{{STATIC_URL}}js/jquery-1.9.1.min.js"></script>
+	<script type="text/javascript" src="{{STATIC_URL}}js/script.js"></script>
+</body>
+</html>
