@@ -1,4 +1,10 @@
+# coding: utf-8
+
 from django.db import models
+from django.core.mail import send_mail
+
+ASSUNTO = u'assunto'
+MENSAGEM = u'mensagem'
 
 
 class Usuario(models.Model):
@@ -12,6 +18,11 @@ class Usuario(models.Model):
 
     def __unicode__(self):
         return self.get_full_name()
+
+    def save(self, *args, **kwargs):
+        send_mail(ASSUNTO, MENSAGEM, 'ola.sociacao@gmail.com',
+                  ['ola.sociacao@gmail.com'])
+        super(Usuario, self).save(*args, **kwargs)
 
 
 class Celular(models.Model):
