@@ -8,97 +8,15 @@ from django.db import models
 class Migration(SchemaMigration):
 
     def forwards(self, orm):
-        # Adding model 'Usuario'
-        db.create_table('home_usuario', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('user', self.gf('django.db.models.fields.related.OneToOneField')(to=orm['auth.User'], unique=True)),
-            ('celular', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['home.Celular'])),
-            ('link_facebook', self.gf('django.db.models.fields.TextField')()),
-            ('ciente', self.gf('django.db.models.fields.BooleanField')(default=False)),
-        ))
-        db.send_create_signal('home', ['Usuario'])
-
-        # Adding model 'Celular'
-        db.create_table('home_celular', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('numero', self.gf('django.db.models.fields.CharField')(max_length=15)),
-            ('operadora', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['home.Operadora'])),
-        ))
-        db.send_create_signal('home', ['Celular'])
-
-        # Adding model 'Operadora'
-        db.create_table('home_operadora', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('nome', self.gf('django.db.models.fields.CharField')(max_length=10)),
-        ))
-        db.send_create_signal('home', ['Operadora'])
-
-        # Adding model 'Camisa'
-        db.create_table('home_camisa', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('descricao', self.gf('django.db.models.fields.CharField')(max_length=20)),
-            ('foto', self.gf('django.db.models.fields.CharField')(max_length=50, blank=True)),
-        ))
-        db.send_create_signal('home', ['Camisa'])
-
-        # Adding model 'Item'
-        db.create_table('home_item', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('camisa', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['home.Camisa'])),
-            ('quantidade', self.gf('django.db.models.fields.IntegerField')()),
-        ))
-        db.send_create_signal('home', ['Item'])
-
-        # Adding model 'FormaPagamento'
-        db.create_table('home_formapagamento', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('descricao', self.gf('django.db.models.fields.CharField')(max_length=200)),
-        ))
-        db.send_create_signal('home', ['FormaPagamento'])
-
-        # Adding model 'Compra'
-        db.create_table('home_compra', (
-            ('id', self.gf('django.db.models.fields.AutoField')(primary_key=True)),
-            ('usuario', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['home.Usuario'])),
-            ('data', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
-            ('formaPagamento', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['home.FormaPagamento'])),
-            ('comprovante', self.gf('django.db.models.fields.files.FileField')(max_length=100)),
-        ))
-        db.send_create_signal('home', ['Compra'])
-
-        # Adding M2M table for field itens on 'Compra'
-        db.create_table('home_compra_itens', (
-            ('id', models.AutoField(verbose_name='ID', primary_key=True, auto_created=True)),
-            ('compra', models.ForeignKey(orm['home.compra'], null=False)),
-            ('item', models.ForeignKey(orm['home.item'], null=False))
-        ))
-        db.create_unique('home_compra_itens', ['compra_id', 'item_id'])
+        # Adding field 'Compra.entregue'
+        db.add_column('home_compra', 'entregue',
+                      self.gf('django.db.models.fields.BooleanField')(default=False),
+                      keep_default=False)
 
 
     def backwards(self, orm):
-        # Deleting model 'Usuario'
-        db.delete_table('home_usuario')
-
-        # Deleting model 'Celular'
-        db.delete_table('home_celular')
-
-        # Deleting model 'Operadora'
-        db.delete_table('home_operadora')
-
-        # Deleting model 'Camisa'
-        db.delete_table('home_camisa')
-
-        # Deleting model 'Item'
-        db.delete_table('home_item')
-
-        # Deleting model 'FormaPagamento'
-        db.delete_table('home_formapagamento')
-
-        # Deleting model 'Compra'
-        db.delete_table('home_compra')
-
-        # Removing M2M table for field itens on 'Compra'
-        db.delete_table('home_compra_itens')
+        # Deleting field 'Compra.entregue'
+        db.delete_column('home_compra', 'entregue')
 
 
     models = {
@@ -152,11 +70,12 @@ class Migration(SchemaMigration):
         },
         'home.compra': {
             'Meta': {'object_name': 'Compra'},
-            'comprovante': ('django.db.models.fields.files.FileField', [], {'max_length': '100'}),
             'data': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'entregue': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'formaPagamento': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['home.FormaPagamento']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'itens': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['home.Item']", 'symmetrical': 'False'}),
+            'pago': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'usuario': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['home.Usuario']"})
         },
         'home.formapagamento': {
