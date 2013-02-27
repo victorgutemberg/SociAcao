@@ -1,3 +1,5 @@
+# coding: utf-8
+
 import os
 # Django settings for sociacao project.
 
@@ -5,14 +7,22 @@ DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 ROOT_PATH = os.path.dirname(__file__)
 
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 25
+DEFAULT_FROM_EMAIL = u'sociAÇÃO <ola.sociacao@gmail.com>'
+EMAIL_HOST_USER = 'ola.sociacao@gmail.com'
+EMAIL_HOST_PASSWORD = 'senha'
+
 
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    ('Renato Oliveira', 'renatooliveira.cin@gmail.com'),
 )
 
 MANAGERS = ADMINS
 
 if os.environ.get('ON_WEB'):
+    DEBUG = FALSE
     import dj_database_url
     DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
 else:

@@ -5,6 +5,7 @@
 </head>
 <body>
 	<form class="form-compra" action="{% url home.views.compra %}" method="POST">
+		{% csrf_token %}
 		<div class="linha">
 			<label class="pergunta">
 				1) Vc está ciente de que só poderá prencher esse form caso já tenha efetuado o pagamento da camisa e que esse pagamento só poderá ser feito até o dia 5 de março?
@@ -66,7 +67,7 @@
 				9) Anexe aqui o arquivo do comprovante de deposito em alguma das contas, onde voce efetuou o pagamento.
 				<br>ps:. Caso voce tenha feito o pagamento por deposito em envelope, só será confirmado, apos confirmacao do banco
 			</label>
-			<input type="file">
+			<input type="file" enctype="multipart/form-data">
 		</div>
 
 		<input type="submit" value="Comprar!">
