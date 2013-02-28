@@ -17,6 +17,7 @@ def handle_uploaded_file(f, nome, path=''):
 		path = os.path.join(path, nome)
 	else:
 		path = nome
+		
 	default_storage.save(path, ContentFile(f.read()))
 
 # Create your views here.
