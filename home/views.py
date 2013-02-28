@@ -3,6 +3,15 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
 from models import Camisa, Usuario, Operadora, Celular, FormaPagamento, Compra, Item
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+
+def handle_uploaded_file(f, nome):
+	try:
+		nome += '.'+str(f._name).split('.')[-1]
+	except:
+		pass
+	default_storage.save(nome, ContentFile(f.read()))
 
 # Create your views here.
 def compra(request):
@@ -54,5 +63,7 @@ def compra(request):
 				item.quantidade = request.POST[camisa]
 				item.save()
 				compra.itens.add(item)
+
+		handle_uploaded_file(request.FILES['comprovante'], '%s_%s'%(user.email, userp.id))
 
 	return render(request, 'form_compra.html', context)

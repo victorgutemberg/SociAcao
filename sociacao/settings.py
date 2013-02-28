@@ -13,10 +13,13 @@ EMAIL_PORT = 25
 DEFAULT_FROM_EMAIL = u'sociAÇÃO <ola.sociacao@gmail.com>'
 EMAIL_HOST_USER = 'ola.sociacao@gmail.com'
 EMAIL_HOST_PASSWORD = 'senha'
-
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('S3_BUCKET_NAME')
 
 ADMINS = (
     ('Renato Oliveira', 'renatooliveira.cin@gmail.com'),
+    ('Victor Gutemberg', 'victorgo.marques@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -36,6 +39,16 @@ else:
             'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
         }
     }
+
+if AWS_ACCESS_KEY_ID:
+    DEFAULT_FILE_STORAGE = 'suprecife.s3utils.MediaRootS3BotoStorage'
+    STATICFILES_STORAGE = 'suprecife.s3utils.StaticRootS3BotoStorage'
+    THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
+    MEDIA_URL = 'https://%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
+    STATIC_URL = 'https://%s.s3.amazonaws.com/static/' % AWS_STORAGE_BUCKET_NAME
+else:
+    MEDIA_URL = '/media/'
+    STATIC_URL = '/static/'
 # Hosts/domain names that are valid for this site; required if DEBUG is False
 # See https://docs.djangoproject.com/en/1.4/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = []
@@ -65,22 +78,22 @@ USE_TZ = True
 
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = ''
+MEDIA_ROOT = os.path.join(ROOT_PATH, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = ''
+#MEDIA_URL = ''
 
 # Absolute path to the directory static files should be collected to.
 # Don't put anything in this directory yourself; store your static files
 # in apps' "static/" subdirectories and in STATICFILES_DIRS.
 # Example: "/home/media/media.lawrence.com/static/"
-STATIC_ROOT = ''
+STATIC_ROOT = os.path.join(ROOT_PATH, 'static_files')
 
 # URL prefix for static files.
 # Example: "http://media.lawrence.com/static/"
-STATIC_URL = '/static/'
+#STATIC_URL = '/static/'
 
 # Additional locations of static files
 STATICFILES_DIRS = (
