@@ -22,7 +22,7 @@ ADMINS = (
 MANAGERS = ADMINS
 
 if os.environ.get('ON_WEB'):
-    DEBUG = False
+    DEBUG = True
     import dj_database_url
     DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
 else:
