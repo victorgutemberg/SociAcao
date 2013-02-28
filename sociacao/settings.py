@@ -41,8 +41,8 @@ else:
     }
 
 if AWS_ACCESS_KEY_ID:
-    DEFAULT_FILE_STORAGE = 'suprecife.s3utils.MediaRootS3BotoStorage'
-    STATICFILES_STORAGE = 'suprecife.s3utils.StaticRootS3BotoStorage'
+    DEFAULT_FILE_STORAGE = 'sociacao.s3utils.MediaRootS3BotoStorage'
+    STATICFILES_STORAGE = 'sociacao.s3utils.StaticRootS3BotoStorage'
     THUMBNAIL_DEFAULT_STORAGE = DEFAULT_FILE_STORAGE
     MEDIA_URL = 'https://%s.s3.amazonaws.com/media/' % AWS_STORAGE_BUCKET_NAME
     STATIC_URL = 'https://%s.s3.amazonaws.com/static/' % AWS_STORAGE_BUCKET_NAME
