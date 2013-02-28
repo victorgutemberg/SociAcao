@@ -1,10 +1,12 @@
-# -*- encoding: utf-8 -*-
+# coding: utf-8
 
 from django.db import models
+from django.core.mail import send_mail
 from django.contrib.auth.models import User
 
+ASSUNTO = u'assunto'
+MENSAGEM = u'mensagem'
 
-# Create your models here.
 
 class Usuario(models.Model):
 	user = models.OneToOneField(User)
@@ -12,8 +14,17 @@ class Usuario(models.Model):
 	link_facebook = models.TextField()
 	ciente = models.BooleanField()
 
-	def __unicode__(self):
+	def get_full_name(self):
 		return self.user.get_full_name()
+
+	def __unicode__(self):
+		return self.get_full_name()
+
+	#def save(self, *args, **kwargs):
+		#send_mail(ASSUNTO, MENSAGEM, 'ola.sociacao@gmail.com',
+				#['ola.sociacao@gmail.com'])
+		#super(Usuario, self).save(*args, **kwargs)
+
 
 class Celular(models.Model):
 	numero = models.CharField(max_length=15)
@@ -23,7 +34,8 @@ class Celular(models.Model):
 		return '%s - %s'%(self.numero, self.operadora.nome)
 
 class Operadora(models.Model):
-	nome = models.CharField(max_length=10)
+    nome = models.CharField(max_length=10)
+
 
 class Camisa(models.Model):
 	descricao = models.CharField(max_length=20)
@@ -31,6 +43,7 @@ class Camisa(models.Model):
 
 	def __unicode__(self):
 		return self.descricao
+
 
 class Item(models.Model):
 	camisa = models.ForeignKey(Camisa)
@@ -54,12 +67,6 @@ class Compra(models.Model):
 	entregue = models.BooleanField(default=False)
 	#comprovante = models.FileField(upload_to='comprovantes') #file
 
-	def file_name(instance, filename):
-		return '/comprovantes/%s'
-
-	def quantidade_itens(self):
-		return self.itens.count()
-
 	def __unicode__(self):
 		if self.pago:
 			pago = 'Pago: OK'
@@ -67,3 +74,5 @@ class Compra(models.Model):
 			pago = 'Pago: Falta'
 		return '%s - %s - %s'%(self.data.strftime('%d/%m/%Y - %H:%M'), self.usuario.user.first_name, pago)
 
+	def file_name(instance, filename):
+		return '/comprovantes/%s'

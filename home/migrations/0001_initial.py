@@ -62,7 +62,8 @@ class Migration(SchemaMigration):
             ('usuario', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['home.Usuario'])),
             ('data', self.gf('django.db.models.fields.DateTimeField')(auto_now_add=True, blank=True)),
             ('formaPagamento', self.gf('django.db.models.fields.related.ForeignKey')(to=orm['home.FormaPagamento'])),
-            ('comprovante', self.gf('django.db.models.fields.files.FileField')(max_length=100)),
+            ('pago', self.gf('django.db.models.fields.BooleanField')(default=False)),
+            ('entregue', self.gf('django.db.models.fields.BooleanField')(default=False)),
         ))
         db.send_create_signal('home', ['Compra'])
 
@@ -152,11 +153,12 @@ class Migration(SchemaMigration):
         },
         'home.compra': {
             'Meta': {'object_name': 'Compra'},
-            'comprovante': ('django.db.models.fields.files.FileField', [], {'max_length': '100'}),
             'data': ('django.db.models.fields.DateTimeField', [], {'auto_now_add': 'True', 'blank': 'True'}),
+            'entregue': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'formaPagamento': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['home.FormaPagamento']"}),
             'id': ('django.db.models.fields.AutoField', [], {'primary_key': 'True'}),
             'itens': ('django.db.models.fields.related.ManyToManyField', [], {'to': "orm['home.Item']", 'symmetrical': 'False'}),
+            'pago': ('django.db.models.fields.BooleanField', [], {'default': 'False'}),
             'usuario': ('django.db.models.fields.related.ForeignKey', [], {'to': "orm['home.Usuario']"})
         },
         'home.formapagamento': {

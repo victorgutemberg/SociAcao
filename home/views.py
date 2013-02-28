@@ -1,9 +1,21 @@
+# coding: utf-8
+
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from models import *
+from models import Camisa, Usuario, Operadora, Celular, FormaPagamento, Compra, Item
 
 # Create your views here.
 def compra(request):
+	context = {}
+	
+	camisas = Camisa.objects.all()
+	operadoras = Operadora.objects.all()
+	contas = FormaPagamento.objects.all()
+	
+	context['camisas'] = camisas
+	context['operadoras'] = operadoras
+	context['contas'] = contas
+
 	if request.method == 'POST':
 		nome = request.POST.get('nome')
 		email = request.POST.get('email')
@@ -43,9 +55,4 @@ def compra(request):
 				item.save()
 				compra.itens.add(item)
 
-
-	camisas = Camisa.objects.all()
-	operadoras = Operadora.objects.all()
-	contas = FormaPagamento.objects.all()
-
-	return render(request, 'form_compra.html', locals())
+	return render(request, 'form_compra.html', context)
