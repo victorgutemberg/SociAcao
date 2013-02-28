@@ -5,13 +5,19 @@ from django.contrib.auth.models import User
 from models import Camisa, Usuario, Operadora, Celular, FormaPagamento, Compra, Item
 from django.core.files.storage import default_storage
 from django.core.files.base import ContentFile
+import os
 
-def handle_uploaded_file(f, nome):
+def handle_uploaded_file(f, nome, path=''):
 	try:
 		nome += '.'+str(f._name).split('.')[-1]
 	except:
 		pass
-	default_storage.save(nome, ContentFile(f.read()))
+
+	if path:
+		path = os.path.join(path, nome)
+	else:
+		path = nome
+	default_storage.save(path, ContentFile(f.read()))
 
 # Create your views here.
 def compra(request):
@@ -64,6 +70,6 @@ def compra(request):
 				item.save()
 				compra.itens.add(item)
 
-		handle_uploaded_file(request.FILES['comprovante'], '%s_%s'%(user.email, userp.id))
+		handle_uploaded_file(request.FILES['comprovante'], '%s_%s'%(user.email, userp.id), 'comprovantes')
 
 	return render(request, 'form_compra.html', context)
