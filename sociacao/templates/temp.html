@@ -48,8 +48,8 @@
 
     <div class="container venda">
       <h1>Venda de Camisas</h1>
-<form class="form-compra" action="/compra/" method="POST" enctype="multipart/form-data">
-	{% csrf_token %}
+<form class="form-compra" action="/compra/" method="POST">
+    <div style="display:none"><input type="hidden" name="csrfmiddlewaretoken" value="TEf766m3l76auQTd32Y3xoyyVYjqgfkj"></div>
     <div class="linha row">
         <p>Você está ciente de que só poderá prencher esse form caso já tenha efetuado o pagamento da camisa e que esse pagamento só poderá ser feito até o dia 5 de março?</p>
 <label class="radio inline">

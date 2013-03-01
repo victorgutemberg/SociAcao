@@ -1,0 +1,142 @@
+
+@font-face {
+  font-family: 'handsean';
+  src: url('http://www.sociacao.org/static/css/font/handsean.eot');
+  src: local('☺'), url('http://www.sociacao.org/static/css/font/handsean.woff') format('woff'), url('http://www.sociacao.org/static/css/font/handsean.ttf') format('truetype'), url('http://www.sociacao.org/static/css/font/handsean.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'human521';
+  src: url('http://www.sociacao.org/static/css/font/human521.eot');
+  src: local('☺'), url('http://www.sociacao.org/static/css/font/human521.woff') format('woff'), url('http://www.sociacao.org/static/css/font/human521.ttf') format('truetype'), url('http://www.sociacao.org/static/css/font/human521.svg') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+textarea:focus,
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="datetime"]:focus,
+input[type="datetime-local"]:focus,
+input[type="date"]:focus,
+input[type="month"]:focus,
+input[type="time"]:focus,
+input[type="week"]:focus,
+input[type="number"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus,
+input[type="search"]:focus,
+input[type="tel"]:focus,
+input[type="color"]:focus,
+.uneditable-input:focus {
+  border-color: rgba(255, 153, 0, 0.8);
+  outline: 0;
+  outline: thin dotted \9;
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 153, 0, 0.8);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 153, 0, 0.8);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 153, 0, 0.8);
+}
+
+.btn-soci-laranja {
+  color: #FFFFFF;
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+  background-color: #E88B00;
+  *background-color: #E88B00;
+  background-image: -moz-linear-gradient(top, #FF9900, #E88B00);
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#FF9900), to(#E88B00));
+  background-image: -webkit-linear-gradient(top, #FF9900, #E88B00);
+  background-image: -o-linear-gradient(top, #FF9900, #E88B00);
+  background-image: linear-gradient(to bottom, #FF9900, #E88B00);
+  background-repeat: repeat-x;
+  border-color: #E88B00;
+  border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FF9900', endColorstr='#E88B00', GradientType=0);
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+.btn-soci-laranja:hover,
+.btn-soci-laranja:active,
+.btn-soci-laranja.active,
+.btn-soci-laranja.disabled,
+.btn-soci-laranja[disabled] {
+  color: #FFFFFF;
+  background-color: #E88B00;
+  *background-color: #003bb3;
+}
+
+h1, h2 {
+  font-family: 'handsean', Helvetica, Arial;
+  font-weight: 400 !important;
+}
+
+body {
+  padding: 125px 0 0;
+  background: #040404;
+}
+
+.menu {
+  position: fixed;
+  left: 0;
+  top: 0;
+  margin: 0;
+  width: 100%;
+  padding: 0 20px;
+  background: #333;
+  background: rgba(30, 30, 30, 0.8);
+  border-bottom: solid 1px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 20px #000000;
+  z-index: 100;
+}
+.menu .menu-container {
+  font-size: 16px;
+  margin: 0;
+}
+.menu ul {
+  float: left;
+  margin: 0;
+}
+.menu ul li {
+  display: block;
+  float: left;
+  line-height: 100px;
+}
+.menu ul li.logo {
+  font-size: 20px;
+  color: #fff;
+  font-weight: bold;
+}
+.menu ul li.logo a {
+  color: #eee;
+}
+.menu ul li a,
+.menu ul li.logo {
+  float: left;
+  display: block;
+  text-decoration: none;
+}
+.menu ul li.logo img {
+  height: 80px;
+}
+.menu ul li a {
+  padding: 0 20px;
+  color: #aaa;
+}
+.menu ul li a:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: #fff;
+}
+.menu ul li a:hover b {
+  color: #fff;
+}
+.menu ul.secondary {
+  border: solid 1px #444;
+  border-width: 1px 1px 0 1px;
+  width: 100%;
+}
+.menu ul.secondary li {
+  line-height: 30px;
+}
+.menu ul.secondary li a {
+  padding: 0 20px;
+  font-size: 14px;
+}
