@@ -33,44 +33,85 @@ def compra(request):
 	context['contas'] = contas
 
 	if request.method == 'POST':
-		nome = request.POST.get('nome')
+		erro = False
+		operadora = request.POST.get('operadora')
 		email = request.POST.get('email')
-		
+		nome = request.POST.get('nome')
 		ciente = request.POST.get('ciente')
 		celular = request.POST.get('celular')
-		operadora = request.POST.get('operadora')
 		facebook = request.POST.get('facebook')
+		conta = request.POST.get('conta')
 
-		user = User()
-		user.first_name = nome
-		user.email = email
-		user.username = email[:30]
-		user.save()
+		context['operadora'] = operadora
+		context['email'] = email
+		context['nome'] = nome
+		context['ciente'] = ciente
+		context['celular'] = celular
+		context['facebook'] = facebook
+		context['conta_id'] = int(conta)
 
-		userp = Usuario()
-		userp.user = user
-		userp.ciente = ciente
-		userp.facebook = facebook
 
-		celular = Celular(numero=celular, operadora_id=operadora)
-		celular.save()
+		if 'comprovante' not in request.FILES:
+			context['msg'] = 'Por favor, anexe o seu comprovante!'
+			erro = True
 
-		userp.celular = celular
-		userp.save()
+		if not operadora:
+			erro = True
+			context['msg'] = 'Por favor, escolha uma operadora!'
 
-		compra = Compra()
-		compra.usuario = userp
-		compra.formaPagamento_id = request.POST.get('conta')
-		compra.save()
+		if not email:
+			erro = True
+			context['msg'] = 'O email é obrigatório!'
 
-		for camisa in [x for x in request.POST if x.startswith('camisa_')]:
-			if request.POST[camisa] != '0':
-				item = Item()
-				item.camisa_id = camisa[7:]
-				item.quantidade = request.POST[camisa]
-				item.save()
-				compra.itens.add(item)
+		if not nome:
+			erro = True
+			context['msg'] = 'O nome é obrigatório!'
 
-		handle_uploaded_file(request.FILES['comprovante'], '%s_%s'%(user.email, userp.id), 'comprovantes')
+		if not conta:
+			erro = True
+			context['msg'] = 'Escolha a conta em que fez o depósito!'
+
+
+		if not erro:
+			try:
+				userExists = False
+				user = User()
+				user.first_name = nome
+				user.email = email
+				user.username = email[:30]
+				user.save()
+			except:
+				userExists = True
+				user = User.objects.get(username=email[:30])
+
+			if userExists:
+				try:
+					userp = Usuario.objects.get(user=user)
+				except:
+					userp = Usuario()
+					userp.user = user
+					userp.ciente = ciente
+					userp.facebook = facebook
+
+					celular = Celular(numero=celular, operadora_id=operadora)
+					celular.save()
+
+					userp.celular = celular
+					userp.save()
+
+			compra = Compra()
+			compra.usuario = userp
+			compra.formaPagamento_id = conta
+			compra.save()
+
+			for camisa in [x for x in request.POST if x.startswith('camisa_')]:
+				if request.POST[camisa] != '0':
+					item = Item()
+					item.camisa_id = camisa[7:]
+					item.quantidade = request.POST[camisa]
+					item.save()
+					compra.itens.add(item)
+
+			handle_uploaded_file(request.FILES['comprovante'], '%s_%s'%(user.email, userp.id), 'comprovantes')
 
 	return render(request, 'form_compra.html', context)

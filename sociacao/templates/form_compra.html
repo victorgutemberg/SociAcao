@@ -45,6 +45,13 @@
         </div>
     </div>
 
+    {% if msg %}
+    <div class="alert alert-error" style="width: 90%; margin: 0 auto;">
+      <strong>Erro!</strong>
+      {{msg}}
+    </div>
+    {% endif %}
+
 
     <div class="container venda">
       <h1>Venda de Camisas</h1>
@@ -53,23 +60,23 @@
     <div class="linha row">
         <p>Você está ciente de que só poderá prencher esse form caso já tenha efetuado o pagamento da camisa e que esse pagamento só poderá ser feito até o dia 9 de março?</p>
 <label class="radio inline">
-  <input type="radio" name="ciente" value="1">
+  <input type="radio" name="ciente" value="1" {% if ciente == '1'%}checked{% endif%}>
   Sim
 </label>
 <label class="radio inline">
-  <input type="radio" name="ciente" value="2" checked>
+  <input type="radio" name="ciente" value="2" {% if ciente != '1'%}checked{% endif%}>
   Não
 </label>
     </div>
 
     <div class="linha row">
       <label for="nome" class="pergunta">Seu nome:</label>
-      <input class="input-xxlarge" title= "Nome completo" type="text" name="nome" placeholder="Nome completo" id="nome" required>
+      <input class="input-xxlarge" title= "Nome completo" type="text" name="nome" placeholder="Nome completo" id="nome" required value="{{nome}}">
     </div>
 
     <div class="linha row">
       <label for="email" class="pergunta">Seu e-mail:</label>
-      <input class="input-xlarge" type="email" name="email" id="email" placeholder="Digite um e-mail válido" required>
+      <input class="input-xlarge" type="email" name="email" id="email" placeholder="Digite um e-mail válido" required value="{{email}}">
     </div>
 
     <div class="linha row">
@@ -87,13 +94,13 @@
         {% endfor %}
     </ul>
   </div>
-  <input type="text" name="celular" class="input-medium" data-mask="(99) 9999-9999" placeholder="(81) 1234-5678" id="celular">
+  <input type="text" name="celular" class="input-medium" data-mask="(99) 9999-9999" placeholder="(81) 1234-5678" id="celular" value="{{celular}}">
 </div>
     </div>
 
     <div class="linha row">
       <label for="facebook" class="pergunta">Qual é o seu Facebook?</label>
-      <input type="url" name="facebook" placeholder="http://www.facebook.com/voce" class="input-xlarge" id="facebook">
+      <input type="url" name="facebook" placeholder="http://www.facebook.com/voce" class="input-xlarge" id="facebook" value="{{facebook}}">
     </div>
 
 
@@ -104,7 +111,7 @@
         {% for camisa in camisas %}
         <div class="span2 camisa">
           <label for="quantidade-1"><h2>{{camisa.descricao}}</h2></label>
-          <input type="number" name="camisa_{{camisa.id}}" id="quantidade-1" min="0" value="0">
+          <input type="number" name="camisa_{{camisa.id}}" id="quantidade-1" min="0" value="{%if camisa.quantidade%}{{camisa.quantidade}}{%else%}0{%endif%}">
         </div>
         {% endfor %}
         <!-- <div class="span2 camisa">
@@ -122,7 +129,7 @@
     <div class="linha row">
       <label class="pergunta">Em qual conta voce efetuou o pagamento?</label>
       {% for conta in contas %}
-        <label class="radio"><input type="radio" name="conta" value="{{conta.id}}" required> {{conta.descricao}} </label>
+        <label class="radio"><input type="radio" name="conta" value="{{conta.id}}" required {% if conta.id == conta_id %}checked{%endif%}> {{conta.descricao}} </label>
     {% endfor %}
     </div>
 
