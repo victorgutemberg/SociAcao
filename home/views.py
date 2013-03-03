@@ -71,10 +71,9 @@ def compra(request):
 				user.email = email
 				user.save()
 				
-				try:
-					userp = Usuario.objects.get(user=user)
-				except:
-					userp = Usuario()
+				userp, createp = Usuario.objects.get_or_create(user=user)
+				
+				if createp:
 					userp.user = user
 					userp.ciente = ciente
 					userp.facebook = facebook
@@ -84,17 +83,6 @@ def compra(request):
 
 					userp.celular = celular
 					userp.save()
-			else:
-				userp = Usuario()
-				userp.user = user
-				userp.ciente = ciente
-				userp.facebook = facebook
-
-				celular = Celular(numero=celular, operadora_id=operadora)
-				celular.save()
-
-				userp.celular = celular
-				userp.save()
 
 			compra = Compra()
 			compra.usuario = userp
