@@ -52,6 +52,13 @@
     </div>
     {% endif %}
 
+    {% if sucesso %}
+    <div class="alert alert-success" style="width: 90%; margin: 0 auto;">
+      <strong>Erro!</strong>
+      {{msg}}
+    </div>
+    {% endif %}
+
 
     <div class="container venda">
       <h1>Venda de Camisas</h1>

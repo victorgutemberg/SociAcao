@@ -42,15 +42,6 @@ def compra(request):
 		facebook = request.POST.get('facebook')
 		conta = request.POST.get('conta')
 
-		context['operadora'] = operadora
-		context['email'] = email
-		context['nome'] = nome
-		context['ciente'] = ciente
-		context['celular'] = celular
-		context['facebook'] = facebook
-		context['conta_id'] = int(conta)
-
-
 		if 'comprovante' not in request.FILES:
 			context['msg'] = 'Por favor, anexe o seu comprovante!'
 			erro = True
@@ -78,11 +69,11 @@ def compra(request):
 				user = User()
 				user.first_name = nome
 				user.email = email
-				user.username = email[:30]
+				user.username = email[:29]
 				user.save()
 			except:
 				userExists = True
-				user = User.objects.get(username=email[:30])
+				user = User.objects.get(username=email[:29])
 
 			if userExists:
 				try:
@@ -113,5 +104,15 @@ def compra(request):
 					compra.itens.add(item)
 
 			handle_uploaded_file(request.FILES['comprovante'], '%s_%s'%(user.email, userp.id), 'comprovantes')
+			context['sucesso'] = 'Compra registrada com sucesso'
+
+		else: # Caso tenha dado erro
+			context['operadora'] = operadora
+			context['email'] = email
+			context['nome'] = nome
+			context['ciente'] = ciente
+			context['celular'] = celular
+			context['facebook'] = facebook
+			context['conta_id'] = int(conta)
 
 	return render(request, 'form_compra.html', context)
