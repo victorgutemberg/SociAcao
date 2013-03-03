@@ -64,18 +64,13 @@ def compra(request):
 
 
 		if not erro:
-			try:
-				userExists = False
-				user = User()
+			user, create = User.objects.get_or_create(username=email[:29])
+
+			if create:
 				user.first_name = nome
 				user.email = email
-				user.username = email[:29]
 				user.save()
-			except:
-				userExists = True
-				user = User.objects.get(username=email[:29])
-
-			if userExists:
+				
 				try:
 					userp = Usuario.objects.get(user=user)
 				except:
