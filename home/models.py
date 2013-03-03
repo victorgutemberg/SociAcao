@@ -72,7 +72,14 @@ class Compra(models.Model):
 			pago = 'Pago: OK'
 		else:
 			pago = 'Pago: Falta'
-		return '%s - %s - %s'%(self.data.strftime('%d/%m/%Y - %H:%M'), self.usuario.user.first_name, pago)
+		itens = self.itens.all()
+
+		camisas = []
+		for item in itens:
+			camisas.append('%s - %d'%(item.camisa.descricao, item.quantidade))
+
+		casmisas = ' '.join(camisas)
+		return '%s - %s - %s -%s'%(self.data.strftime('%d/%m/%Y - %H:%M'), self.usuario.user.first_name, camisas, pago)
 
 	def file_name(instance, filename):
 		return '/comprovantes/%s'
