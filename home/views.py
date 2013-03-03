@@ -89,6 +89,17 @@ def compra(request):
 
 					userp.celular = celular
 					userp.save()
+			else:
+				userp = Usuario()
+				userp.user = user
+				userp.ciente = ciente
+				userp.facebook = facebook
+
+				celular = Celular(numero=celular, operadora_id=operadora)
+				celular.save()
+
+				userp.celular = celular
+				userp.save()
 
 			compra = Compra()
 			compra.usuario = userp
@@ -104,7 +115,7 @@ def compra(request):
 					compra.itens.add(item)
 
 			handle_uploaded_file(request.FILES['comprovante'], '%s_%s'%(user.email, userp.id), 'comprovantes')
-			context['sucesso'] = 'Compra registrada com sucesso'
+			context['sucesso'] = 'Compra registrada.'
 
 		else: # Caso tenha dado erro
 			context['operadora'] = operadora
