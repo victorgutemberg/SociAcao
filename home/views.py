@@ -67,7 +67,7 @@ def compra(request):
 			user, create = User.objects.get_or_create(username=email[:29])
 
 			if create:
-				user.first_name = nome
+				#user.first_name = nome
 				user.email = email
 				user.save()
 				
