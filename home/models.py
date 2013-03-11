@@ -13,7 +13,7 @@ class Usuario(models.Model):
 	celular = models.ForeignKey('Celular')
 	link_facebook = models.TextField()
 	ciente = models.BooleanField()
-
+	nome = models.CharField(max_length=200)
 	def get_full_name(self):
 		return self.user.get_full_name()
 
