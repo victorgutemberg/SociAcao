@@ -75,6 +75,7 @@ def compra(request):
 				
 				if createp:
 					userp.user = user
+					userp.nome = nome
 					userp.ciente = ciente
 					userp.facebook = facebook
 
